@@ -99,5 +99,3 @@ if __name__ == "__main__":
         raise Exception("玩法名称不能为空！")
     else:
         run(name=args.name)
-
-    print("测试")
