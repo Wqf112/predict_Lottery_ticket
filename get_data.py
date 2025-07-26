@@ -59,13 +59,13 @@ def spider(name, start, end, mode):
                 item[u"红球_{}".format(i+1)] = tr.find_all("td")[i+1].get_text().strip()
             item[u"蓝球"] = tr.find_all("td")[7].get_text().strip()
             data.append(item)
-        elif name == "dlt":
-            item[u"期数"] = tr.find_all("td")[0].get_text().strip()
-            for i in range(5):
-                item[u"红球_{}".format(i+1)] = tr.find_all("td")[i+1].get_text().strip()
-            for j in range(2):
-                item[u"蓝球_{}".format(j+1)] = tr.find_all("td")[6+j].get_text().strip()
-            data.append(item)
+        # elif name == "dlt":
+        #     item[u"期数"] = tr.find_all("td")[0].get_text().strip()
+        #     for i in range(5):
+        #         item[u"红球_{}".format(i+1)] = tr.find_all("td")[i+1].get_text().strip()
+        #     for j in range(2):
+        #         item[u"蓝球_{}".format(j+1)] = tr.find_all("td")[6+j].get_text().strip()
+        #     data.append(item)
         else:
             logger.warning("抱歉，没有找到数据源！")
 

@@ -34,7 +34,35 @@ def create_data(data, name, windows):
             os.mkdir(model_path)
         logger.info("训练数据已加载! ")
 
-    data = data.iloc[:, 2:].values
+    data = data.iloc[:, 2:].to_numpy()
+    logger.info("训练集数据维度: {}".format(data.shape))
+    x_data, y_data = [], []
+    for i in range(len(data) - windows - 1):
+        sub_data = data[i:(i+windows+1), :]
+        x_data.append(sub_data[1:])
+        y_data.append(sub_data[0])
+
+    cut_num = 6 if name == "ssq" else 5
+    return {
+        "red": {
+            "x_data": np.array(x_data)[:, :, :cut_num], "y_data": np.array(y_data)[:, :cut_num]
+        },
+        "blue": {
+            "x_data": np.array(x_data)[:, :, cut_num:], "y_data": np.array(y_data)[:, cut_num:]
+        }
+    }
+
+
+def test_create_data(data, name, windows):
+    if not len(data):
+        raise logger.error(" 请执行 get_data.py 进行数据下载！")
+    else:
+        # 创建模型文件夹
+        if not os.path.exists(model_path):
+            os.mkdir(model_path)
+        logger.info("训练数据已加载! ")
+
+    data = data.iloc[:, 2:].to_numpy()
     logger.info("训练集数据维度: {}".format(data.shape))
     x_data, y_data = [], []
     for i in range(len(data) - windows - 1):
@@ -287,6 +315,9 @@ def run(name, train_test_split):
     train_data, test_data = create_train_test_data(
         name, model_args[name]["model_args"]["windows_size"], train_test_split
     )
+
+    return 
+
     logger.info("开始训练【{}】红球模型...".format(name_path[name]["name"]))
     train_with_eval_red_ball_model(
         name,
