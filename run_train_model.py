@@ -316,8 +316,6 @@ def run(name, train_test_split):
         name, model_args[name]["model_args"]["windows_size"], train_test_split
     )
 
-    return 
-
     logger.info("开始训练【{}】红球模型...".format(name_path[name]["name"]))
     train_with_eval_red_ball_model(
         name,
